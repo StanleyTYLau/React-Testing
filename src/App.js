@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Route, Link} from 'react-router-dom'
+import Form from './components/Form'
+import Report from './components/Report'
+
+const uuidv4 = require('uuid/v4');
 
 class App extends Component {
+  state = {
+    favColors: [],
+    
+  }
+
+  addFavColor = (color) => {
+    color.id = uuidv4();
+    const copyColors = [...this.state.favColors, color]
+    
+    this.setState({
+      favColors: copyColors
+    })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Link to='/'> Form </Link>
+          {this.state.favColors.length > 0 ? <Link to='/report'> Report </Link> : " Report "}
+          
+
+          <Route exact path='/' render={(props) => <Form {...props} addFavColor={this.addFavColor}/>} />
+          <Route path='/report' render={(props) => <Report {...props} favColors={this.state.favColors}/>} />
+        </div>
+      </BrowserRouter>
+      
     );
   }
 }
