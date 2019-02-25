@@ -93,6 +93,34 @@ describe('Form component', () => {
     expect(formState.colorValid).toBeTruthy();
   });
 
- 
+  it('Form input has 3 inputs', () => {
+    const wrapper = mount(<Form />);
+
+    expect(wrapper.find('input')).toHaveLength(3);
+  });
+  it('Form input email state change', () => {
+    const wrapper = mount(<Form />);
+
+    const emailInput = wrapper.find('#email');
+    emailInput.instance().value = 'abc@email.com';
+    emailInput.simulate('change');
+
+    const phoneInput = wrapper.find('#phone');
+    phoneInput.instance().value = '+1 123 123 12 12';
+    phoneInput.simulate('change');
+
+    const colorInput = wrapper.find('#color');
+    colorInput.instance().value = 'BLUE';
+    colorInput.simulate('change');
+
+    console.log("state: ", wrapper.state());
+    //expect(wrapper.state('email')).toBe('abc@email.com');
+    expect(wrapper.state('email')).toBe('abc@email.com');
+    expect(wrapper.state('phone')).toBe('+1 123 123 12 12');
+    expect(wrapper.state('color')).toBe('BLUE');
+    expect(wrapper.state('emailValid')).toBeTruthy();
+    expect(wrapper.state('phoneValid')).toBeTruthy();
+    expect(wrapper.state('colorValid')).toBeTruthy();
+  })
 
 })
