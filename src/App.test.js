@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import Form from './components/Form';
+import Report from './components/Report';
 import { shallow, mount } from 'enzyme';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
@@ -123,4 +124,20 @@ describe('Form component', () => {
     expect(wrapper.state('colorValid')).toBeTruthy();
   })
 
+  
+})
+
+describe('Report component', () => {
+  it('Report displays favorite colors', () => {
+    const wrapper = mount(<Report favColors={[{email: 'abc@email.com', phone: '+1 123 123 12 12', color: 'BLUE'},
+                                              {email: 'abcd@email.com', phone: '+1 123 123 12 12', color: 'BLUE'},
+                                              {email: 'abce@email.com', phone: '+1 123 123 12 12', color: 'RED'},
+    ]}/>);
+
+    expect(wrapper.find('div')).toHaveLength(5);
+    expect(wrapper.find('div').at(1).text()).toBe('BLACK: 0');
+    expect(wrapper.find('div').at(2).text()).toBe('BLUE: 2');
+    expect(wrapper.find('div').at(3).text()).toBe('RED: 1');
+    expect(wrapper.find('div').at(4).text()).toBe('GREEN: 0');
+  })
 })
