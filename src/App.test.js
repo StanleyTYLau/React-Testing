@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import Form from './components/Form';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -92,4 +92,7 @@ describe('Form component', () => {
     expect(formState.formErrors.color).toBe('');
     expect(formState.colorValid).toBeTruthy();
   });
+
+ 
+
 })
